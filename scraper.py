@@ -10,10 +10,28 @@ print("Código de status", resposta.status_code)     # Verificação da requisi�
 # endregion
 
 
+
+# region Raspagem de dados 
 soup = BeautifulSoup(resposta.text, "html.parser")  # 1.2.1 Criando o objeto BeautifulSoup para analisar o HTML da página
 print("Título da página:", soup.title.text)         #título da página (<title>...</title>)
 
-Primeira_citacao = soup.find("div", class_="quote")
+# Primeira_citacao = soup.find("div", class_= "quote")
 
-texto = Primeira_citacao.find("span", class_= "text").text
-print("Primeira citação:", texto)
+# texto = Primeira_citacao.find("span", class_= "text").text
+# print("Primeira citação:", texto)
+
+# autor = Primeira_citacao.find("small", class_= "author").text
+# print("Autor da citação:", autor)
+
+todas_citacoes = soup.find_all("div", class_= "quote")
+print("Quantidade de citações na pagina: ", len(todas_citacoes))
+print("")
+print("")
+# endregion 
+
+for indice, citacao in enumerate(todas_citacoes):
+    texto = citacao.find("span", class_= "text").text
+    print(f"citação n°{indice + 1}:", texto)
+
+    autor = citacao.find("small", class_= "author").text
+    print(f"Autor da citação n°{indice + 1}:", autor)
